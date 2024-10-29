@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class KNNClassifier {
+class KNN {
     private List<DataPoint> trainingData;
     private int k;
 
-    public KNNClassifier(int k) {
+    public KNN(int k) {
         this.k = k;
         this.trainingData = new ArrayList<>();
     }
@@ -18,14 +18,13 @@ class KNNClassifier {
     // Clasificar un nuevo punto de datos basándose en los k vecinos más cercanos
     public String classify(DataPoint newPoint) {
         List<DataPointDistance> distances = new ArrayList<>();
+        //Calcular distancia entre el nuevo punto y cada punto de entrenamiento.
         for (DataPoint point : trainingData) {
             double distance = DataPoint.calculateDistance(point, newPoint);
             distances.add(new DataPointDistance(point, distance));
         }
-
-        // Ordenar manualmente las distancias
-        sortDistances(distances);
-
+        // Ordenar distancias
+        OrdDistancias(distances);
         // Obtener las etiquetas de los k vecinos más cercanos
         List<String> nearestLabels = new ArrayList<>();
         for (int i = 0; i < k; i++) {
@@ -33,11 +32,11 @@ class KNNClassifier {
         }
 
         // Devolver la etiqueta más común (clasificación)
-        return findMostCommonLabel(nearestLabels);
+        return MostCommonLabel(nearestLabels);
     }
 
     // Método para ordenar distancias manualmente
-    private void sortDistances(List<DataPointDistance> distances) {
+    private void OrdDistancias(List<DataPointDistance> distances) {
         for (int i = 0; i < distances.size() - 1; i++) {
             for (int j = 0; j < distances.size() - i - 1; j++) {
                 if (distances.get(j).getDistance() > distances.get(j + 1).getDistance()) {
@@ -50,7 +49,7 @@ class KNNClassifier {
     }
 
     // Función para encontrar la etiqueta más común
-    private String findMostCommonLabel(List<String> labels) {
+    private String MostCommonLabel(List<String> labels) {
         String mostCommon = null;
         int maxCount = 0;
         for (String label : labels) {
@@ -66,15 +65,15 @@ class KNNClassifier {
     // Función para contar la frecuencia de una etiqueta
     private int countFrequency(List<String> labels, String label) {
         int count = 0;
-        for (String l : labels) {
-            if (l.equals(label)) {
+        for (String lab : labels) {
+            if (lab.equals(label)) {
                 count++;
             }
         }
         return count;
     }
 
-    // Clase anidada para almacenar la distancia desde un punto de datos
+    //Almacenar un punto de datos junto con su distancia a otro punto.
     private static class DataPointDistance {
         private DataPoint point;
         private double distance;
