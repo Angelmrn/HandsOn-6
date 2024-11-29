@@ -1,3 +1,4 @@
+//Moran Flores Angel Daniel
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,6 +19,7 @@ public class Main {
             knn.addTrainingData(point);
         }
 
+        
         // Punto por clasificar (radio / textura / perímetro / área / suavidad)
         DataPoint newPoint = new DataPoint(new double[]{13.17, 21.81, 85.42,531.5, 0.09714}, "Unknown");//M
         DataPoint newPoint2 = new DataPoint(new double[]{19.02, 24.59, 122,1076, 0.09029}, "Unknown");//M
@@ -55,5 +57,6 @@ public class Main {
         System.out.println("Clasificado como: " + result8);
         System.out.println("Clasificado como: " + result9);
         System.out.println("Clasificado como: " + result10);
+        
     }
 }
